@@ -4,6 +4,18 @@ function library:Init()
     local ByteHub = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
 
+    local topbar = Instance.new("Frame")
+    local UICorner = Instance.new("UICorner")
+    local title = Instance.new("TextLabel")
+    local exit = Instance.new("ImageButton")
+    local UICorner_2 = Instance.new("UICorner")
+
+    local tabs = Instance.new("Frame")
+    local UICorner_3 = Instance.new("UICorner")
+    local tabs_2 = Instance.new("Frame")
+
+    local content = Instance.new("Frame")
+
     ByteHub.Name = "ByteHub"
     ByteHub.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
     ByteHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -16,8 +28,96 @@ function library:Init()
     Main.BorderSizePixel = 0
     Main.Position = UDim2.new(0.5, 0, 0.5, 0)
     Main.Size = UDim2.new(0.371216625, 0, 0.625, 0)
+    
+    topbar.Name = "topbar"
+    topbar.Parent = Main
+    topbar.AnchorPoint = Vector2.new(0.5, 0.5)
+    topbar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    topbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    topbar.BorderSizePixel = 0
+    topbar.Position = UDim2.new(0.49999997, 0, 0.0500000007, 0)
+    topbar.Size = UDim2.new(0.99999994, 0, 0.100000001, 0)
+    topbar.ZIndex = 2
+    
+    UICorner.CornerRadius = UDim.new(0, 5)
+    UICorner.Parent = topbar
+    
+    title.Name = "title"
+    title.Parent = topbar
+    title.AnchorPoint = Vector2.new(0.5, 0.5)
+    title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    title.BackgroundTransparency = 1.000
+    title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    title.BorderSizePixel = 0
+    title.Position = UDim2.new(0.126577079, 0, 0.500001431, 0)
+    title.Size = UDim2.new(0.197094321, 0, 1.0000006, 0)
+    title.Font = Enum.Font.GothamBold
+    title.Text = "ByteHub"
+    title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    title.TextSize = 15.000
+    title.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+    
+    exit.Name = "exit"
+    exit.Parent = topbar
+    exit.AnchorPoint = Vector2.new(0.5, 0.5)
+    exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    exit.BackgroundTransparency = 1.000
+    exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    exit.BorderSizePixel = 0
+    exit.Position = UDim2.new(0.954631865, 0, 0.5, 0)
+    exit.Size = UDim2.new(0.0489373505, 0, 0.625, 0)
+    exit.Image = "rbxassetid://16875574263"
+    
+    UICorner_2.CornerRadius = UDim.new(0, 5)
+    UICorner_2.Parent = Main
 
-    return ByteHub, Main
+    tabs.Name = "tabs"
+    tabs.Parent = Main
+    tabs.AnchorPoint = Vector2.new(0.5, 0.5)
+    tabs.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    tabs.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    tabs.BorderSizePixel = 0
+    tabs.Position = UDim2.new(0.150000006, 0, 0.5, 0)
+    tabs.Size = UDim2.new(0.300000012, 0, 1.00000012, 0)
+    
+    UICorner_3.CornerRadius = UDim.new(0, 5)
+    UICorner_3.Parent = tabs
+
+    tabs_2.Name = "tabs"
+    tabs_2.Parent = tabs
+    tabs_2.AnchorPoint = Vector2.new(0.5, 0.5)
+    tabs_2.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    tabs_2.BackgroundTransparency = 1.000
+    tabs_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    tabs_2.BorderSizePixel = 0
+    tabs_2.Position = UDim2.new(0.499999851, 0, 0.56250006, 0)
+    tabs_2.Size = UDim2.new(0.999999702, 0, 0.875, 0)
+
+    UIListLayout.Parent = tabs_2
+    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.Padding = UDim.new(0.0299999993, 0)
+
+    local function RJVWD_fake_script() -- topbar.exit 
+        local script = Instance.new('LocalScript', topbar)
+    
+        local btn = script.Parent.exit
+        local gui = script.Parent.Parent.Parent
+        
+        if gui.Name == "ByteHub" then
+            print("GUI has been found")
+        end
+        
+        local function close()
+            btn.MouseButton1Click:Connect(function()
+                gui:Destroy()
+            end)
+        end
+        
+        close()
+    end
+    return
 end
 
 return library
