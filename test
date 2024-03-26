@@ -1,3 +1,5 @@
+local library = {}
+
 function library:Init()
     local ByteHub = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
