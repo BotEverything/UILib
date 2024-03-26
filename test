@@ -3,7 +3,6 @@ local library = {}
 function library:Init()
     local ByteHub = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
-
     local topbar = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
     local title = Instance.new("TextLabel")
