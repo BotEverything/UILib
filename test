@@ -1,8 +1,8 @@
 local library = {}
-
 function library:Init()
     local ByteHub = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
+
     local topbar = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
     local title = Instance.new("TextLabel")
@@ -153,3 +153,7 @@ function library:NewTab(name)
     Frame.BorderSizePixel = 0
     Frame.Position = UDim2.new(1.00387597, 0, 0.49000001, 0)
     Frame.Size = UDim2.new(0.0149999997, 0, 1, 0)
+
+
+
+return library
