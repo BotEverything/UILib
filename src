@@ -1,0 +1,55 @@
+local UI = {}
+
+function UI.new()
+    local self = {}
+    
+    local title = ""
+    local size = UDim2.new(0, 300, 0, 200)
+    local position = UDim2.new(0.5, -150, 0.5, -100)
+    local visible = false
+    
+    
+    function self.SetTitle(newTitle)
+        title = newTitle
+    end
+    
+    function self.SetSize(newSize)
+        size = newSize
+    end
+    
+    function self.SetPosition(newPosition)
+        position = newPosition
+    end
+    
+    function self.Show()
+        visible = true
+    end
+    
+    function self.Hide()
+        visible = false
+    end
+    
+    function self.Render()
+        if visible then
+            local frame = Instance.new("Frame")
+            frame.Size = size
+            frame.Position = position
+            frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            frame.BorderSizePixel = 2
+            frame.Parent = game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui
+            
+            local titleLabel = Instance.new("TextLabel")
+            titleLabel.Size = UDim2.new(1, 0, 0, 30)
+            titleLabel.Position = UDim2.new(0, 0, 0, -30)
+            titleLabel.Text = title
+            titleLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+            titleLabel.TextSize = 18
+            titleLabel.BackgroundTransparency = 1
+            titleLabel.Parent = frame
+        end
+    end
+    
+    return self
+end
+
+return UI
