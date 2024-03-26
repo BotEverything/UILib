@@ -1,0 +1,23 @@
+local library = {}
+
+function library:Init()
+    local ByteHub = Instance.new("ScreenGui")
+    local Main = Instance.new("Frame")
+
+    ByteHub.Name = "ByteHub"
+    ByteHub.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    ByteHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    
+    Main.Name = "Main"
+    Main.Parent = ByteHub
+    Main.AnchorPoint = Vector2.new(0.5, 0.5)
+    Main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Main.BorderSizePixel = 0
+    Main.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Main.Size = UDim2.new(0.371216625, 0, 0.625, 0)
+
+    return ByteHub, Main
+end
+
+return library
