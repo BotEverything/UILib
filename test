@@ -116,12 +116,12 @@ function library:Init()
         close()
     end
 
-function library:NewTab()
+function library:NewTab(name)
     local tab1 = Instance.new("Frame")
     local TextButton = Instance.new("TextButton")
     local Frame = Instance.new("Frame")
     
-    tab1.Name = "tab1"
+    tab1.Name = name.. "Tab"
     tab1.Parent = tabs_2
     tab1.AnchorPoint = Vector2.new(0.5, 0.5)
     tab1.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -139,7 +139,7 @@ function library:NewTab()
     TextButton.Position = UDim2.new(0.0362182111, 0, 0, 0)
     TextButton.Size = UDim2.new(0.91818893, 0, 0.965000689, 0)
     TextButton.Font = Enum.Font.GothamMedium
-    TextButton.Text = "Combat"
+    TextButton.Text = name
     TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     TextButton.TextSize = 14.000
     TextButton.TextXAlignment = Enum.TextXAlignment.Left
