@@ -1,0 +1,688 @@
+local library = {}
+
+local TeleportService = game:GetService("TeleportService")
+local TweenService = game:GetService("TweenService")
+
+local player = game:GetService("Players").LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+
+function ContentToggle(tabButton, contentHolder)
+    local function tabClick()
+        for _, contentFrame in ipairs(player.PlayerGui.ByteHub.Main.content:GetChildren()) do
+            if contentFrame:IsA("Frame") then
+                contentFrame.Visible = false
+            end
+        end
+
+        local tabName = tabButton.Parent.Name
+        local contentFrameName = tabName:sub(1, -4) .. "Content"
+        local contentFrame = player.PlayerGui.ByteHub.Main.content:FindFirstChild(contentFrameName)
+        
+        if contentFrame then
+            contentFrame.Visible = true
+        else
+            warn("Content frame not found for tab:", tabName)
+        end
+
+        tabButton.Parent.Frame.BackgroundTransparency = 0
+        tabButton.Parent.BackgroundTransparency = 0
+        
+        local parent = tabButton.Parent.Parent
+        for _, tab in ipairs(parent:GetChildren()) do
+            if tab:IsA("Frame") and tab.Name ~= tabButton.Parent.Name then
+                local frame = tab:FindFirstChild("Frame")
+                if frame then
+                    frame.BackgroundTransparency = 1
+                    frame.Parent.BackgroundTransparency = 1
+                end
+            end
+        end
+    end
+    tabButton.MouseButton1Click:Connect(tabClick)
+end
+
+function library:Init()
+    local ByteHub = Instance.new("ScreenGui")
+    local Main = Instance.new("Frame")
+    local mainstroke = Instance.new("UIStroke")
+    local UICorner = Instance.new("UICorner")
+    local topbar = Instance.new("Frame")
+    local UICorner = Instance.new("UICorner")
+    local title = Instance.new("TextLabel")
+    local exit = Instance.new("ImageButton")
+    local UICorner_2 = Instance.new("UICorner")
+    local content = Instance.new("Frame")
+    local tabs = Instance.new("Frame")
+    local UICorner_3 = Instance.new("UICorner")
+    local tabs_2 = Instance.new("Frame")
+    local UIListLayout = Instance.new("UIListLayout")
+
+    ByteHub.Name = "ByteHub"
+    ByteHub.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    ByteHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    
+    Main.Name = "Main"
+    Main.Parent = ByteHub
+    Main.AnchorPoint = Vector2.new(0.5, 0.5)
+    Main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Main.BorderSizePixel = 0
+    Main.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Main.Size = UDim2.new(0.371216625, 0, 0.625, 0)
+
+    mainstroke.Parent = Main
+    mainstroke.ApplyStrokeMode = "Border"
+    mainstroke.Color = Color3.fromRGB(85, 85, 255)
+    mainstroke.Thickness = 1
+        
+    topbar.Name = "topbar"
+    topbar.Parent = Main
+    topbar.AnchorPoint = Vector2.new(0.5, 0.5)
+    topbar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    topbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    topbar.BorderSizePixel = 0
+    topbar.Position = UDim2.new(0.49999997, 0, 0.0500000007, 0)
+    topbar.Size = UDim2.new(0.99999994, 0, 0.100000001, 0)
+    topbar.ZIndex = 2
+    
+    UICorner.CornerRadius = UDim.new(0, 5)
+    UICorner.Parent = topbar
+    
+    title.Name = "title"
+    title.Parent = topbar
+    title.AnchorPoint = Vector2.new(0.5, 0.5)
+    title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    title.BackgroundTransparency = 1.000
+    title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    title.BorderSizePixel = 0
+    title.Position = UDim2.new(0.126577079, 0, 0.500001431, 0)
+    title.Size = UDim2.new(0.197094321, 0, 1.0000006, 0)
+    title.Font = Enum.Font.GothamBold
+    title.Text = "ByteHub"
+    title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    title.TextSize = 15.000
+    title.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+    title.TextXAlignment = Enum.TextXAlignment.Left
+    
+    exit.Name = "exit"
+    exit.Parent = topbar
+    exit.AnchorPoint = Vector2.new(0.5, 0.5)
+    exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    exit.BackgroundTransparency = 1.000
+    exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    exit.BorderSizePixel = 0
+    exit.Position = UDim2.new(0.954631865, 0, 0.5, 0)
+    exit.Size = UDim2.new(0.0489373505, 0, 0.625, 0)
+    exit.Image = "rbxassetid://16875574263"
+    
+    UICorner_2.CornerRadius = UDim.new(0, 5)
+    UICorner_2.Parent = Main
+
+    content.Name = "content"
+    content.Parent = Main
+    content.AnchorPoint = Vector2.new(0.5, 0.5)
+    content.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    content.BackgroundTransparency = 1.000
+    content.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    content.BorderSizePixel = 0
+    content.Position = UDim2.new(0.649999976, 0, 0.550000012, 0)
+    content.Size = UDim2.new(0.660032034, 0, 0.850000024, 0)
+    content.ZIndex = 2
+
+    tabs.Name = "tabs"
+    tabs.Parent = Main
+    tabs.AnchorPoint = Vector2.new(0.5, 0.5)
+    tabs.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    tabs.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    tabs.BorderSizePixel = 0
+    tabs.Position = UDim2.new(0.150000006, 0, 0.5, 0)
+    tabs.Size = UDim2.new(0.300000012, 0, 1.00000012, 0)
+    
+    UICorner_3.CornerRadius = UDim.new(0, 5)
+    UICorner_3.Parent = tabs
+
+    tabs_2.Name = "tabs"
+    tabs_2.Parent = tabs
+    tabs_2.AnchorPoint = Vector2.new(0.5, 0.5)
+    tabs_2.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    tabs_2.BackgroundTransparency = 1.000
+    tabs_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    tabs_2.BorderSizePixel = 0
+    tabs_2.Position = UDim2.new(0.499999851, 0, 0.56250006, 0)
+    tabs_2.Size = UDim2.new(0.999999702, 0, 0.875, 0)
+
+    UIListLayout.Parent = tabs_2
+    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.Padding = UDim.new(0.0299999993, 0)
+    
+    local function updateTitleColor()
+        local text = title.Text:lower()
+        if text:find("byte") and text:find("hub") then
+            title.RichText = true
+            title.Text = "<font color=\"rgb(85, 85, 255)\">Byte</font><font color=\"#FFFFFF\">Hub</font>"
+        end
+    end
+
+    title:GetPropertyChangedSignal("Text"):Connect(updateTitleColor)
+    updateTitleColor()
+    
+    exit.MouseButton1Click:Connect(function()
+        print("Exit button clicked")
+        ByteHub:Destroy()
+    end)
+    local function OVZHPOI_fake_script(Main)
+        local UserInputService = game:GetService("UserInputService")
+        local RunService = game:GetService("RunService")
+        
+        local gui = Main
+        local topnavFrame = gui:WaitForChild("topbar")
+        
+        local dragging = false
+        local dragInput
+        local dragStart
+        local startPos
+        
+        function Lerp(a, b, m)
+            return a + (b - a) * m
+        end
+        
+        local lastMousePos
+        local lastGoalPos
+        local DRAG_SPEED = 10
+        
+        function Update(dt)
+            if not startPos then return end
+            if not dragging and lastGoalPos then
+                gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
+                return 
+            end
+        
+            local delta = lastMousePos - UserInputService:GetMouseLocation()
+            local xGoal = startPos.X.Offset - delta.X
+            local yGoal = startPos.Y.Offset - delta.Y
+            lastGoalPos = UDim2.new(startPos.X.Scale, xGoal, startPos.Y.Scale, yGoal)
+            gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+        end
+        
+        gui.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                local isInsideTopnav = topnavFrame.AbsolutePosition.X <= input.Position.X and input.Position.X <= topnavFrame.AbsolutePosition.X + topnavFrame.AbsoluteSize.X
+                    and topnavFrame.AbsolutePosition.Y <= input.Position.Y and input.Position.Y <= topnavFrame.AbsolutePosition.Y + topnavFrame.AbsoluteSize.Y
+                if isInsideTopnav then
+                    dragging = true
+                    dragStart = input.Position
+                    startPos = gui.Position
+                    lastMousePos = UserInputService:GetMouseLocation()
+        
+                    input.Changed:Connect(function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            dragging = false
+                        end
+                    end)
+                end
+            end
+        end)
+        
+        gui.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                dragInput = input
+            end
+        end)
+        
+        RunService.Heartbeat:Connect(Update)
+        
+    end
+    OVZHPOI_fake_script(Main)   
+    return library 
+end
+function library:NewTab(name)
+    local tab = Instance.new("Frame")
+    local button = Instance.new("TextButton")
+    local frame = Instance.new("Frame")
+    local tabHolder = player.PlayerGui.ByteHub.Main.tabs.tabs
+
+    tab.Name = name.. "Tab"
+    tab.Parent = tabHolder
+    tab.AnchorPoint = Vector2.new(0.5, 0.5)
+    tab.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    tab.BackgroundTransparency = 1.000
+    tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    tab.BorderSizePixel = 0
+    tab.Position = UDim2.new(0.500000119, 0, 0.0398215726, 0)
+    tab.Size = UDim2.new(0.876633704, 0, 0.0796431452, 0)
+
+    button.Parent = tab
+    button.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
+    button.BackgroundTransparency = 1.000
+    button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    button.BorderSizePixel = 0
+    button.Position = UDim2.new(0.0362182111, 0, 0, 0)
+    button.Size = UDim2.new(0.91818893, 0, 0.965000689, 0)
+    button.Font = Enum.Font.GothamMedium
+    button.Text = name
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 14.000
+    button.TextXAlignment = Enum.TextXAlignment.Left
+
+    frame.Parent = tab
+    frame.AnchorPoint = Vector2.new(0.5, 0.5)
+    frame.BackgroundColor3 = Color3.fromRGB(85, 85, 255)
+    frame.BackgroundTransparency = 1.000
+    frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    frame.BorderSizePixel = 0
+    frame.Position = UDim2.new(1.00387597, 0, 0.49000001, 0)
+    frame.Size = UDim2.new(0.0149999997, 0, 1, 0)
+
+    print("New tab created:", tab.Name)
+
+    local contentHolder = Instance.new("Frame")
+    contentHolder.Name = name.. "Content"
+    contentHolder.Parent = player.PlayerGui.ByteHub.Main.content
+    contentHolder.AnchorPoint = Vector2.new(0.5, 0.5)
+    contentHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    contentHolder.BackgroundTransparency = 1.000
+    contentHolder.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    contentHolder.BorderSizePixel = 0
+    contentHolder.Position = UDim2.new(0.498613387, 0, 0.501470506, 0)
+    contentHolder.Size = UDim2.new(0.999999881, 0, 1.00294101, 0)
+    contentHolder.ZIndex = 2
+    contentHolder.Visible = false
+
+    local ContentScrollFrame = Instance.new("ScrollingFrame")
+    ContentScrollFrame.Parent = contentHolder
+    ContentScrollFrame.Active = true
+    ContentScrollFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ContentScrollFrame.BackgroundTransparency = 1.000
+    ContentScrollFrame.ScrollBarImageTransparency = 1
+    ContentScrollFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    ContentScrollFrame.BorderSizePixel = 0
+    ContentScrollFrame.Position = UDim2.new(0.00610985886, 0, 0, 0)
+    ContentScrollFrame.Size = UDim2.new(1.02555418, 0, 1, 0)
+
+    local ListLayout = Instance.new("UIListLayout")
+    ListLayout.Parent = ContentScrollFrame
+    ListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    ListLayout.Padding = UDim.new(0.0149999997, 0)
+
+    local Padding = Instance.new("UIPadding")
+    Padding.Parent = ContentScrollFrame
+    Padding.PaddingRight = UDim.new(0.0299999993, 0)
+
+    print("New content created:", contentHolder.Name)
+
+    ContentToggle(button, contentHolder)
+
+    return tab
+end
+function library:NewButton(tab, text, priority, callback)
+    local contentFrameName = string.gsub(tab.Name, "Tab$", "") .. "Content"
+    local contentFrame = player.PlayerGui.ByteHub.Main.content:FindFirstChild(contentFrameName)
+    if not contentFrame then
+        return
+    end
+
+    local ScrollingFrame = contentFrame:FindFirstChild("ScrollingFrame")
+    if not ScrollingFrame then
+        return
+    end
+    priority = tostring(priority)
+
+    local button = Instance.new("TextButton")
+    local textButtonCorner = Instance.new("UICorner")
+    button.Name = priority .. "Button"
+    button.Parent = ScrollingFrame
+    button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    button.BorderSizePixel = 0
+    button.Position = UDim2.new(0.03, 0, (#ScrollingFrame:GetChildren() + 1) * 0.05, 0)
+    button.Size = UDim2.new(0.94, 0, 0.035, 0)
+    button.Font = Enum.Font.GothamMedium
+    button.Text = text
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 12
+
+    textButtonCorner.CornerRadius = UDim.new(0, 4)
+    textButtonCorner.Parent = button
+
+    button.MouseButton1Click:Connect(function()
+        if callback then
+            callback()
+        end
+    end)
+
+    return button
+end
+function library:NewSection(tab, text, priority)
+    local contentFrameName = string.gsub(tab.Name, "Tab$", "") .. "Content"
+    local contentFrame = player.PlayerGui.ByteHub.Main.content:FindFirstChild(contentFrameName)
+    if not contentFrame then
+        return
+    end
+
+    local ScrollingFrame = contentFrame:FindFirstChild("ScrollingFrame")
+    if not ScrollingFrame then
+        return
+    end
+
+    local frame = Instance.new("Frame")
+    local sectionLabel = Instance.new("TextLabel")
+
+    frame.Name = priority .. "Section"
+    frame.Parent = ScrollingFrame
+    frame.AnchorPoint = Vector2.new(0.5, 0.5)
+    frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    frame.BackgroundTransparency = 1.000
+    frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    frame.BorderSizePixel = 0
+    frame.Position = UDim2.new(0.5, 0, 1.14309955, 0)
+    frame.Size = UDim2.new(1, 0, 0.0222693346, 0)
+    frame.ZIndex = 2
+
+    sectionLabel.Parent = frame
+    sectionLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+    sectionLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    sectionLabel.BackgroundTransparency = 1.000
+    sectionLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    sectionLabel.BorderSizePixel = 0
+    sectionLabel.Position = UDim2.new(0.493420154, 0, 0.484941214, 0)
+    sectionLabel.Size = UDim2.new(0.988159955, 0, 1.08000004, 0)
+    sectionLabel.Font = Enum.Font.Gotham
+    sectionLabel.Text = text
+    sectionLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    sectionLabel.TextSize = 13.000
+    sectionLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    return section
+end
+function library:NewToggle(tab, text, priority)
+    local contentFrameName = string.gsub(tab.Name, "Tab$", "") .. "Content"
+    local contentFrame = player.PlayerGui.ByteHub.Main.content:FindFirstChild(contentFrameName)
+    if not contentFrame then
+        return
+    end
+
+    local ScrollingFrame = contentFrame:FindFirstChild("ScrollingFrame")
+    if not ScrollingFrame then
+        return
+    end
+
+    priority = tostring(priority)
+
+    local toggleFrame = Instance.new("Frame")
+    local toggleCorner1 = Instance.new("UICorner")
+    local toggleText = Instance.new("TextLabel")
+    local toggle = Instance.new("ImageButton")
+    local toggleCorner2 = Instance.new("UICorner")
+    local bindBtn = Instance.new("TextButton")
+
+    toggleFrame.Name = priority .. "Toggle"
+    toggleFrame.Parent = ScrollingFrame
+    toggleFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    toggleFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    toggleFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    toggleFrame.BorderSizePixel = 0
+    toggleFrame.Position = UDim2.new(0.500000119, 0, 0.246603101, 0)
+    toggleFrame.Size = UDim2.new(0.940000057, 0, 0.0440820679, 0)
+    toggleFrame.ZIndex = 2
+
+    toggleCorner1.CornerRadius = UDim.new(0, 4)
+    toggleCorner1.Parent = toggleFrame
+
+    toggleText.Name = "text"
+    toggleText.Parent = toggleFrame
+    toggleText.AnchorPoint = Vector2.new(0.5, 0.5)
+    toggleText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    toggleText.BackgroundTransparency = 1.000
+    toggleText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    toggleText.BorderSizePixel = 0
+    toggleText.Position = UDim2.new(0.123441674, 0, 0.500001371, 0)
+    toggleText.Size = UDim2.new(0.203365162, 0, 1.0000006, 0)
+    toggleText.Font = Enum.Font.Gotham
+    toggleText.Text = text
+    toggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggleText.TextSize = 13.000
+    toggleText.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+    toggleText.TextXAlignment = Enum.TextXAlignment.Left
+
+    toggle.Name = "toggleBtn"
+    toggle.Parent = toggleFrame
+    toggle.AnchorPoint = Vector2.new(0.5, 0.5)
+    toggle.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    toggle.BorderSizePixel = 0
+    toggle.Position = UDim2.new(0.93900001, 0, 0.500000298, 0)
+    toggle.Size = UDim2.new(0.064000003, 0, 0.670000017, 0)
+    toggle.Image = "rbxassetid://0"
+
+    toggleCorner2.CornerRadius = UDim.new(0, 4)
+    toggleCorner2.Parent = toggle
+
+    bindBtn.Name = "bind"
+    bindBtn.Parent = toggleFrame
+    bindBtn.AnchorPoint = Vector2.new(0.5, 0.5)
+    bindBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    bindBtn.BackgroundTransparency = 1.000
+    bindBtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    bindBtn.BorderSizePixel = 0
+    bindBtn.Position = UDim2.new(0.781000018, 0, 0.5, 0)
+    bindBtn.Size = UDim2.new(0.187999994, 0, 1, 0)
+    bindBtn.Font = Enum.Font.SourceSans
+    bindBtn.Text = "[ bind ]"
+    bindBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+    bindBtn.TextSize = 14.000
+    bindBtn.TextXAlignment = Enum.TextXAlignment.Right
+    local function YFTVWY_fake_script()
+        local script = Instance.new('LocalScript')
+        local toggleButton = toggle
+        local bindButton = bindBtn
+    
+        local toggleVisible = false
+        local keybind = Enum.KeyCode.Insert
+    
+        local function toggleVisibility()
+            toggleVisible = not toggleVisible
+            if toggleVisible then
+                toggleButton.BackgroundColor3 = Color3.fromRGB(85, 85, 255)
+            else
+                toggleButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+            end
+        end
+    
+        local function handleKeyBinding(input)
+            if input.KeyCode == keybind then
+                toggleVisibility()
+            end
+        end
+    
+        local function updateBindButtonText()
+            bindButton.Text = "[ ... ]"
+            local input = game:GetService("UserInputService").InputBegan:Wait()
+            if input and input.KeyCode then
+                keybind = input.KeyCode
+                bindButton.Text = "Bind: " .. keybind.Name
+            end
+        end
+    
+        toggleButton.MouseButton1Click:Connect(function()
+            toggleVisibility()
+        end)
+    
+        bindButton.MouseButton1Click:Connect(function()
+            bindButton.Text = "[ ... ]"
+            coroutine.wrap(updateBindButtonText)()
+        end)
+    
+        game:GetService("UserInputService").InputBegan:Connect(handleKeyBinding)
+    end
+    YFTVWY_fake_script()    
+
+    return toggle
+end
+function library:NewSlider(tab, text, value1, value2, priority)
+    local contentFrameName = string.gsub(tab.Name, "Tab$", "") .. "Content"
+    local contentFrame = player.PlayerGui.ByteHub.Main.content:FindFirstChild(contentFrameName)
+    if not contentFrame then
+        return
+    end
+
+    local ScrollingFrame = contentFrame:FindFirstChild("ScrollingFrame")
+    if not ScrollingFrame then
+        return
+    end
+
+    priority = tostring(priority)
+
+    local sliderFrame = Instance.new("Frame")
+    local frameCorner = Instance.new("UICorner")
+    local sliderBackground = Instance.new("Frame")
+    local frameCorner2 = Instance.new("UICorner")
+    local sliderFill = Instance.new("Frame")
+    local frameCorner3 = Instance.new("UICorner")
+    local sliderValue = Instance.new("TextBox")
+    local sliderText = Instance.new("TextLabel")
+
+    sliderFrame.Name = priority .. "Slider"
+    sliderFrame.Parent = ScrollingFrame
+    sliderFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    sliderFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    sliderFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    sliderFrame.BorderSizePixel = 0
+    sliderFrame.Position = UDim2.new(0.500000119, 0, 0.111207284, 0)
+    sliderFrame.Size = UDim2.new(0.940000057, 0, 0.073337242, 0)
+    sliderFrame.ZIndex = 2
+
+    frameCorner.CornerRadius = UDim.new(0, 4)
+    frameCorner.Parent = sliderFrame
+
+    sliderBackground.Name = "SliderBackground"
+    sliderBackground.Parent = sliderFrame
+    sliderBackground.AnchorPoint = Vector2.new(0.5, 0.5)
+    sliderBackground.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    sliderBackground.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    sliderBackground.BorderSizePixel = 0
+    sliderBackground.Position = UDim2.new(0.497571856, 0, 0.683362305, 0)
+    sliderBackground.Size = UDim2.new(0.951625526, 0, 0.147045374, 0)
+    sliderBackground.ZIndex = 2
+
+    frameCorner2.CornerRadius = UDim.new(0, 16)
+    frameCorner2.Parent = sliderBackground
+
+    sliderFill.Name = "SliderFill"
+    sliderFill.Parent = sliderBackground
+    sliderFill.BackgroundColor3 = Color3.fromRGB(85, 85, 255)
+    sliderFill.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    sliderFill.BorderSizePixel = 0
+    sliderFill.Position = UDim2.new(0, 0, 4.59408966e-06, 0)
+    sliderFill.Size = UDim2.new(0, 0, 0.999993443, 0)
+    sliderFill.ZIndex = 2
+
+    frameCorner3.CornerRadius = UDim.new(0, 16)
+    frameCorner3.Parent = sliderFill
+
+    sliderValue.Name = "value"
+    sliderValue.Parent = sliderFrame
+    sliderValue.AnchorPoint = Vector2.new(0.5, 0.5)
+    sliderValue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    sliderValue.BackgroundTransparency = 1.000
+    sliderValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    sliderValue.BorderSizePixel = 0
+    sliderValue.Position = UDim2.new(0.910276532, 0, 0.271999925, 0)
+    sliderValue.Size = UDim2.new(0.126215741, 0, 0.328000039, 0)
+    sliderValue.Font = Enum.Font.Gotham
+    sliderValue.Text = "0.00"
+    sliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
+    sliderValue.TextSize = 12.000
+    sliderValue.TextXAlignment = Enum.TextXAlignment.Right
+
+    sliderText.Name = "title"
+    sliderText.Parent = sliderFrame
+    sliderText.AnchorPoint = Vector2.new(0.5, 0.5)
+    sliderText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    sliderText.BackgroundTransparency = 1.000
+    sliderText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    sliderText.BorderSizePixel = 0
+    sliderText.Position = UDim2.new(0.123441689, 0, 0.271681905, 0)
+    sliderText.Size = UDim2.new(0.203365177, 0, 0.327697963, 0)
+    sliderText.Font = Enum.Font.Gotham
+    sliderText.Text = text
+    sliderText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    sliderText.TextSize = 12.000
+    sliderText.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local sliderBackground = sliderBackground
+    local sliderFill = sliderFill
+    local inputField = sliderValue
+    local slider = sliderValue
+    
+
+    local function updateSliderFill(mousePosition)
+        local relativeX = mousePosition.X - sliderBackground.AbsolutePosition.X
+        local fillWidth = math.clamp(relativeX, 0, sliderBackground.AbsoluteSize.X)
+        sliderFill.Size = UDim2.new(0, fillWidth, 1, 0)
+        local value = fillWidth / sliderBackground.AbsoluteSize.X * (value2 - value1) + value1
+        inputField.Text = string.format("%.2f", value)
+    end
+
+    local function updateSliderFromInput()
+        local newValue = tonumber(inputField.Text)
+        if newValue then
+            newValue = math.clamp(newValue, value1, value2)
+            slider.Text = newValue
+            local fillWidth = (newValue - value1) / (value2 - value1) * sliderBackground.AbsoluteSize.X
+            sliderFill.Size = UDim2.new(0, fillWidth, 1, 0)
+        else
+            inputField.Text = tostring(value1)
+            slider.Text = tostring(value1)
+            sliderFill.Size = UDim2.new(0, 0, 1, 0)
+        end
+    end
+
+    sliderBackground.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            updateSliderFill(game:GetService("UserInputService"):GetMouseLocation())
+            local mouseMovedEvent = game:GetService("UserInputService").InputChanged:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseMovement then
+                    updateSliderFill(input.Position)
+                end
+            end)
+            game:GetService("UserInputService").InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    mouseMovedEvent:Disconnect()
+                end
+            end)
+        end
+    end)
+    
+    sliderBackground.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            updateSliderFromInput()
+        end
+    end)
+    
+    inputField:GetPropertyChangedSignal("Text"):Connect(function()
+        updateSliderFromInput()
+        local newValue = tonumber(slider.Text)
+        if newValue then
+            inputVal = newValue
+            sliderVal = newValue
+            print("Slider value:", slider.Text)
+        end
+    end)
+
+    inputField.FocusLost:Connect(function(enterPressed)
+        if enterPressed then
+            updateSliderFromInput()
+            local newValue = tonumber(slider.Text)
+            if newValue then
+                inputVal = newValue
+                sliderVal = newValue
+                print("Slider value:", slider.Text)
+            end
+        end
+    end)
+    return slider
+end
+
+return library
